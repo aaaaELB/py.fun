@@ -1,4 +1,3 @@
-# praticar hash SHA-256
 import hashlib
 
 def hash_sha256(entrada, saida, salt):

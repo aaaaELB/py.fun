@@ -1,0 +1,5 @@
+admin = admin
+abertossi = Enclaves
+ELB = asd
+Umin = sulista
+Cocozinho = coco

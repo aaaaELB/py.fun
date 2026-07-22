@@ -1,0 +1,22 @@
+import json
+import hashlib
+
+user = input("Digite o nome do novo usuário: ")
+while True:
+    senha = input("Digite a senha do novo usuário: ")
+    confirmar_senha = input("Confirme a senha: ")
+    if senha == confirmar_senha:
+        break
+    else:
+        print("As senhas não coincidem. Tente novamente.")
+
+salt = "brawl"
+hash_senha = hashlib.sha256((senha + salt).encode('utf-8')).hexdigest()
+
+with open('D:\\Codes\\py.fun\\usuarios.json', 'r') as f:
+    usuarios = json.load(f)
+
+usuarios["usuarios"].append({"user": user, "senha": hash_senha})
+
+with open('D:\\Codes\\py.fun\\usuarios.json', 'w') as f:
+    json.dump(usuarios, f)
