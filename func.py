@@ -59,3 +59,25 @@ def apagar_login():
             else:
                 print("Senha incorreta. Não foi possível remover o usuário.")
                 return
+
+def alterar_senha():
+    user = input("Digite o nome do usuário para alterar a senha: ")
+    with open('D:\\Codes\\py.fun\\usuarios.json', 'r', encoding='utf-8') as f:
+        usuarios = json.load(f)
+
+    for i in usuarios["usuarios"]:
+        if i['user'] == user:
+            senha_atual = input("Digite a senha atual: ")
+            if hashlib.sha256((senha_atual + "brawl").encode('utf-8')).hexdigest() == i['senha']:
+                nova_senha = input("Digite a nova senha: ")
+                confirmar_nova_senha = input("Confirme a nova senha: ")
+                if nova_senha == confirmar_nova_senha:
+                    i['senha'] = hashlib.sha256((nova_senha + "brawl").encode('utf-8')).hexdigest()
+                    with open('D:\\Codes\\py.fun\\usuarios.json', 'w', encoding='utf-8') as f:
+                        json.dump(usuarios, f, indent=4)
+                    print("Senha alterada com sucesso.")
+                    return
+                else:
+                    print("As senhas não coincidem. Não foi possível alterar a senha.")
+            else:
+                print("Senha atual incorreta.")
