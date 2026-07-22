@@ -1,7 +1,15 @@
 import json
 import hashlib
 
-user = input("Digite o nome do novo usuário: ")
+while True:
+    user = input("Digite o nome do novo usuário: ")
+    with open('D:\\Codes\\py.fun\\usuarios.json', 'r') as f:
+        usuarios = json.load(f)
+    if any(usuario['user'] == user for usuario in usuarios["usuarios"]):
+        print("Usuário já existe. Tente outro nome.")
+    else:
+        break
+
 while True:
     senha = input("Digite a senha do novo usuário: ")
     confirmar_senha = input("Confirme a senha: ")
