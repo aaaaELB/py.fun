@@ -15,10 +15,11 @@ def verificar_senha(user, senha):
             return True
     return False
 
-def criar_conta(user, senha):
+def criar_conta():
+
     while True:
         user = input("Digite o nome do novo usuário: ")
-        with open('D:\\Codes\\py.fun\\usuarios.json', 'r') as f:
+        with open('D:\\Codes\\py.fun\\usuarios.json', 'r', encoding='utf-8') as f:
             usuarios = json.load(f)
         if any(usuario['user'] == user for usuario in usuarios["usuarios"]):
             print("Usuário já existe. Tente outro nome.")
@@ -36,10 +37,25 @@ def criar_conta(user, senha):
     salt = "brawl"
     hash_senha = hashlib.sha256((senha + salt).encode('utf-8')).hexdigest()
 
-    with open('D:\\Codes\\py.fun\\usuarios.json', 'r') as f:
-        usuarios = json.load(f)
-
     usuarios["usuarios"].append({"user": user, "senha": hash_senha})
 
-    with open('D:\\Codes\\py.fun\\usuarios.json', 'w') as f:
-        json.dump(usuarios, f)
+    with open('D:\\Codes\\py.fun\\usuarios.json', 'w', encoding='utf-8') as f:
+        json.dump(usuarios, f, indent=4)
+
+def apagar_login():
+    user = input("Digite o nome do usuário a ser removido: ")
+    with open('D:\\Codes\\py.fun\\usuarios.json', 'r', encoding='utf-8') as f:
+        usuarios = json.load(f)
+
+    for i in usuarios["usuarios"]:
+        if i['user'] == user:
+            senha = input("Digite a senha do usuário a ser removido: ")
+            if hashlib.sha256((senha + "brawl").encode('utf-8')).hexdigest() == i['senha']:
+                usuarios["usuarios"].remove(i)
+                with open('D:\\Codes\\py.fun\\usuarios.json', 'w', encoding='utf-8') as f:
+                    json.dump(usuarios, f, indent=4)
+                print("Usuário removido com sucesso.")
+                return
+            else:
+                print("Senha incorreta. Não foi possível remover o usuário.")
+                return

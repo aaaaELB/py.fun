@@ -3,7 +3,7 @@ import hashlib
 
 while True:
     user = input("Digite o nome do novo usuário: ")
-    with open('D:\\Codes\\py.fun\\usuarios.json', 'r') as f:
+    with open('D:\\Codes\\py.fun\\usuarios.json', 'r', encoding='utf-8') as f:
         usuarios = json.load(f)
     if any(usuario['user'] == user for usuario in usuarios["usuarios"]):
         print("Usuário já existe. Tente outro nome.")
@@ -21,10 +21,7 @@ while True:
 salt = "brawl"
 hash_senha = hashlib.sha256((senha + salt).encode('utf-8')).hexdigest()
 
-with open('D:\\Codes\\py.fun\\usuarios.json', 'r') as f:
-    usuarios = json.load(f)
-
 usuarios["usuarios"].append({"user": user, "senha": hash_senha})
 
-with open('D:\\Codes\\py.fun\\usuarios.json', 'w') as f:
-    json.dump(usuarios, f)
+with open('D:\\Codes\\py.fun\\usuarios.json', 'w', encoding='utf-8') as f:
+    json.dump(usuarios, f, indent=4)
